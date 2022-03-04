@@ -11,8 +11,8 @@ use Cpanel::JSON::XS;
 use Moo;
 use namespace::clean;
 
-has username => ( is => 'ro', required => 1 );
-has password => ( is => 'ro', required => 1 );
+has username => ( is => 'ro', required => 0 );
+has password => ( is => 'ro', required => 0 );
 
 has http => (
     is => 'ro',
@@ -25,12 +25,14 @@ has http => (
 sub get_profile {
     my $self = shift;
 
+    my ($user,$pass) = $self->_credentials_via_env;
+
     my $response = $self->http->request(
         'GET',
         'https://'
-        . $self->username
+        . $user
         . ':'
-        . $self->password
+        . $pass
         . '@'
         . 'smartrow.fit/api/account'
     );
@@ -48,12 +50,14 @@ sub get_profile {
 sub get_workouts {
     my $self = shift;
 
+    my ($user,$pass) = $self->_credentials_via_env;
+
     my $response = $self->http->request(
         'GET',
         'https://'
-        . $self->username
+        . $user
         . ':'
-        . $self->password
+        . $pass
         . '@'
         . 'smartrow.fit/api/public-game'
     );
@@ -66,5 +70,18 @@ sub get_workouts {
 
     return $json;
 }
+
+sub _credentials_via_env {
+    my $self = shift;
+
+    my $user = $self->username || $ENV{SMARTROW_USERNAME};
+    # Escape the "@" as perl basic auth requirement
+    $user =~ s/@/%40/g;
+
+    my $pass = $self->password || $ENV{SMARTROW_PASSWORD};
+
+    return($user,$pass),
+}
+
 
 1;
