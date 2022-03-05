@@ -1,3 +1,8 @@
+0.003           2022-03-05
+    - Add some POD
+    - Kwalitee changes
+    - Use more Dist::Zilla for testing, verioning etc
+
 0.002           2022-03-05
     - Addition of a Changes file
 
