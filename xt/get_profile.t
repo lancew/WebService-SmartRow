@@ -42,11 +42,8 @@ is $profile,
     };
 
 my $workouts = $sr->get_workouts;
-use Data::Dumper;
-note Dumper $workouts;
 
 is $workouts->[0],
-
     {
     "accessory_mac"        => E,
     "account"              => E,
@@ -81,7 +78,6 @@ is $workouts->[0],
     "watt_kg"              => E,
     "watt_per_beat"        => E,
     },
-
     , 'First item from array has correct structure';
 
 done_testing;
