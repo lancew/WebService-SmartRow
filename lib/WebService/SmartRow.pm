@@ -1,6 +1,8 @@
 use strict;
 use warnings;
 
+use v5.6.0;
+
 package WebService::SmartRow;
 
 # ABSTRACT: Connect and get data from SmartRow API
