@@ -15,7 +15,7 @@ has username => ( is => 'ro', required => 0 );
 has password => ( is => 'ro', required => 0 );
 
 has http => (
-    is => 'ro',
+    is      => 'ro',
     default => sub {
         return HTTP::Tiny->new();
     },
@@ -25,19 +25,12 @@ has http => (
 sub get_profile {
     my $self = shift;
 
-    my ($user,$pass) = $self->_credentials_via_env;
+    my ( $user, $pass ) = $self->_credentials_via_env;
 
-    my $response = $self->http->request(
-        'GET',
-        'https://'
-        . $user
-        . ':'
-        . $pass
-        . '@'
-        . 'smartrow.fit/api/account'
-    );
+    my $response = $self->http->request( 'GET',
+        'https://' . $user . ':' . $pass . '@' . 'smartrow.fit/api/account' );
 
-    if (!$response->{success}) {
+    if ( !$response->{success} ) {
         return 'Response error';
     }
 
@@ -50,19 +43,15 @@ sub get_profile {
 sub get_workouts {
     my $self = shift;
 
-    my ($user,$pass) = $self->_credentials_via_env;
+    my ( $user, $pass ) = $self->_credentials_via_env;
 
-    my $response = $self->http->request(
-        'GET',
-        'https://'
-        . $user
-        . ':'
-        . $pass
-        . '@'
-        . 'smartrow.fit/api/public-game'
-    );
+    my $response = $self->http->request( 'GET',
+              'https://'
+            . $user . ':'
+            . $pass . '@'
+            . 'smartrow.fit/api/public-game' );
 
-    if (!$response->{success}) {
+    if ( !$response->{success} ) {
         return 'Response error';
     }
 
@@ -80,8 +69,36 @@ sub _credentials_via_env {
 
     my $pass = $self->password || $ENV{SMARTROW_PASSWORD};
 
-    return($user,$pass),
+    return ( $user, $pass ),;
 }
 
+=pod
+=head1 SYNOPSIS
+
+ This module is a basic wrapper to allow Perl apps to access data from https://smartrow.fit
+
+ my $smartrow = WebService::SmartRow->new(
+  username => 'foo',
+  password => 'bar',
+ );
+
+ my $profile  = $smartrow->get_profile;
+ my $workouts = $smartrow->get_workouts;
+
+ Credentials can be passed via environment variables
+
+ * SMARTROW_USERNAME
+ * SMARTROW_PASSWORD
+
+ If passing credentials via ENV you can simply use WebService::SmartRow->new;
+
+=head1 method get_profile
+
+  This method obtains your profile information
+
+=head1  get_workouts
+
+  This method returns all the workouts you have done via SmartRow
+=cut
 
 1;
