@@ -92,11 +92,31 @@ sub _credentials_via_env {
 
  If passing credentials via ENV you can simply use WebService::SmartRow->new;
 
-=head1 method get_profile
+=head2 http
+
+  http is a HTTP::Tiny object by default, you can provide your own on construction.
+
+  This might be helpful if, for example, you wanted to change the user agent.
+
+=head2 username
+
+  get/set the username for the API
+
+  Note that we parse the username in get_ methods to escape the "@" char.
+
+  You can also set the SMARTROW_USERNAME environment variable.
+
+=head2 password
+
+  get/set the password for the API
+
+  You can also set the SMARTROW_PASSWORD environment variable.
+
+=head2 get_profile
 
   This method obtains your profile information
 
-=head1  get_workouts
+=head2 get_workouts
 
   This method returns all the workouts you have done via SmartRow
 =cut
