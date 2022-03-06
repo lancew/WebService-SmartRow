@@ -1,3 +1,8 @@
+0.004           2022-03-06
+    - Add get_leaderboard method (as per the Ranking page on smartrow.fit)
+    - Improve the POD and add POD for get_leaderboard
+    - Increase the minimum Perl version to facilitate syntax used in get_leaderboard
+
 0.003           2022-03-05
     - Add some POD
     - Kwalitee changes

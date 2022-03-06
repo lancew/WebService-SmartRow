@@ -43,7 +43,17 @@ sub get_profile {
 
 # https://smartrow.fit/api/public-game
 sub get_workouts {
-    my $self = shift;
+}
+
+sub get_leaderboard {
+    my ( $self, %args ) = @_;
+
+    $args{distance} //= 2000;
+
+    my $params_string = '';
+    for my $key ( keys %args ) {
+        $params_string .= sprintf( "%s=%s&", $key, $args{$key} );
+    }
 
     my ( $user, $pass ) = $self->_credentials_via_env;
 
@@ -51,7 +61,8 @@ sub get_workouts {
               'https://'
             . $user . ':'
             . $pass . '@'
-            . 'smartrow.fit/api/public-game' );
+            . 'smartrow.fit/api/leaderboard?'
+            . $params_string );
 
     if ( !$response->{success} ) {
         return 'Response error';
@@ -59,7 +70,7 @@ sub get_workouts {
 
     my $json = decode_json $response->{content};
 
-    return $json;
+    return $json->[0];
 }
 
 sub _credentials_via_env {
@@ -93,12 +104,16 @@ sub _credentials_via_env {
  * SMARTROW_PASSWORD
 
  If passing credentials via ENV you can simply use WebService::SmartRow->new;
+=cut
+
+=head1 ATTRIBUTES
 
 =head2 http
 
   http is a HTTP::Tiny object by default, you can provide your own on construction.
 
   This might be helpful if, for example, you wanted to change the user agent.
+=cut
 
 =head2 username
 
@@ -107,20 +122,45 @@ sub _credentials_via_env {
   Note that we parse the username in get_ methods to escape the "@" char.
 
   You can also set the SMARTROW_USERNAME environment variable.
+=cut
 
 =head2 password
 
   get/set the password for the API
 
   You can also set the SMARTROW_PASSWORD environment variable.
+=cut
+
+=head1 METHODS
 
 =head2 get_profile
 
   This method obtains your profile information
+=cut
 
 =head2 get_workouts
 
   This method returns all the workouts you have done via SmartRow
+=cut
+
+=head2 get_leaderboard
+
+  This method returns the data presented in the leaderboard (AKA Rankings page).
+
+  Unlike the first two methods, get_leaderboard can accept parameters to limit the data.
+
+  e.g.
+       my $leaderboard = $srv->get_leaderboard(
+           distance => 5000,  # Default if not provided to 2000, is mandatory
+           year     => 2022,
+           country  => 188,
+           age      => 'c',
+           gender   => 'f',
+           weight   => 'l',
+       );
+
+   More details on values able to be used to follow.
+
 =cut
 
 1;
