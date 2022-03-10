@@ -23,6 +23,26 @@ has http => (
     },
 );
 
+
+# https://smartrow.fit/api/challenge
+sub get_challenges {
+    my $self = shift;
+
+    my ( $user, $pass ) = $self->_credentials_via_env;
+
+    my $response = $self->http->request( 'GET',
+        'https://' . $user . ':' . $pass . '@' . 'smartrow.fit/api/challenge' );
+
+    if ( !$response->{success} ) {
+        return 'Response error';
+    }
+
+    my $json = decode_json $response->{content};
+
+    return $json;
+}
+
+
 # https://smartrow.fit/api/account
 sub get_profile {
     my $self = shift;
@@ -43,6 +63,24 @@ sub get_profile {
 
 # https://smartrow.fit/api/public-game
 sub get_workouts {
+    my $self = shift;
+
+    my ( $user, $pass ) = $self->_credentials_via_env;
+
+    my $response = $self->http->request( 'GET',
+              'https://'
+            . $user . ':'
+            . $pass . '@'
+            . 'smartrow.fit/api/public-game'
+            );
+
+    if ( !$response->{success} ) {
+        return 'Response error';
+    }
+
+    my $json = decode_json $response->{content};
+
+    return $json;
 }
 
 sub get_leaderboard {
