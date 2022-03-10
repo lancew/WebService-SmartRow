@@ -86,9 +86,10 @@ sub _credentials_via_env {
 }
 
 =pod
+
 =head1 SYNOPSIS
 
- This module is a basic wrapper to allow Perl apps to access data from https://smartrow.fit
+This module is a basic wrapper to allow Perl apps to access data from https://smartrow.fit
 
  my $smartrow = WebService::SmartRow->new(
   username => 'foo',
@@ -98,68 +99,62 @@ sub _credentials_via_env {
  my $profile  = $smartrow->get_profile;
  my $workouts = $smartrow->get_workouts;
 
- Credentials can be passed via environment variables
+Credentials can be passed via environment variables
 
- * SMARTROW_USERNAME
- * SMARTROW_PASSWORD
+* SMARTROW_USERNAME
+* SMARTROW_PASSWORD
 
- If passing credentials via ENV you can simply use WebService::SmartRow->new;
-=cut
+If passing credentials via ENV you can simply use WebService::SmartRow->new;
 
 =head1 ATTRIBUTES
 
 =head2 http
 
-  http is a HTTP::Tiny object by default, you can provide your own on construction.
+http is a HTTP::Tiny object by default, you can provide your own on construction.
 
-  This might be helpful if, for example, you wanted to change the user agent.
-=cut
+This might be helpful if, for example, you wanted to change the user agent.
 
 =head2 username
 
-  get/set the username for the API
+get/set the username for the API
 
-  Note that we parse the username in get_ methods to escape the "@" char.
+Note that we parse the username in get_ methods to escape the "@" char.
 
-  You can also set the SMARTROW_USERNAME environment variable.
-=cut
+You can also set the SMARTROW_USERNAME environment variable.
 
 =head2 password
 
-  get/set the password for the API
+get/set the password for the API
 
-  You can also set the SMARTROW_PASSWORD environment variable.
-=cut
+You can also set the SMARTROW_PASSWORD environment variable.
 
 =head1 METHODS
 
 =head2 get_profile
 
-  This method obtains your profile information
-=cut
+This method obtains your profile information
 
 =head2 get_workouts
 
-  This method returns all the workouts you have done via SmartRow
-=cut
+This method returns all the workouts you have done via SmartRow
 
 =head2 get_leaderboard
 
-  This method returns the data presented in the leaderboard (AKA Rankings page).
+This method returns the data presented in the leaderboard (AKA Rankings page).
 
-  Unlike the first two methods, get_leaderboard can accept parameters to limit the data.
+Unlike the first two methods, get_leaderboard can accept parameters to limit the data.
 
-  e.g.
-       my $leaderboard = $srv->get_leaderboard(
-           distance => 5000,  # Default if not provided to 2000, is mandatory
-           year     => 2022,
-           country  => 188,
-           age      => 'c',
-           gender   => 'f',
-           weight   => 'l',
-       );
+e.g.
+    my $leaderboard = $srv->get_leaderboard(
+         distance => 5000,  # If not provided will default to 2000
+         year     => 2022,
+         country  => 188,
+         age      => 'c',
+         gender   => 'f',   # m or f (male or female)
+         weight   => 'l',   # l or h (light or heavy)
+     );
 
-   More details on values able to be used to follow.
+More details on values able to be used to follow.
 
 =cut
 
