@@ -194,6 +194,10 @@ e.g.
 
 More details on values able to be used to follow.
 
+=head2 get_challenges
+
+This method returns an array of challenges, there are no parameters.
+
 =cut
 
 1;
