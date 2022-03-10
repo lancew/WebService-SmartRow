@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 
-use v5.6.0;
+use v5.010;
 
 package WebService::SmartRow;
 
