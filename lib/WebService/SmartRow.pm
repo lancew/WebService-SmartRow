@@ -8,7 +8,7 @@ package WebService::SmartRow;
 # ABSTRACT: Connect and get data from SmartRow API
 
 use HTTP::Tiny;
-use Cpanel::JSON::XS;
+use JSON::MaybeXS;
 
 use Moo;
 use namespace::clean;
