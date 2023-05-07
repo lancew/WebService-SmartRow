@@ -38,3 +38,6 @@ inc/
 
 # yath
 .yath-persist.json
+
+# https://direnv.net/
+.envrc
