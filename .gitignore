@@ -41,3 +41,6 @@ inc/
 
 # https://direnv.net/
 .envrc
+
+# Prevent plenv file https://github.com/tokuhirom/plenv
+.perl-version
